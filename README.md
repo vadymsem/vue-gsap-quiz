@@ -1,4 +1,4 @@
-# animate-vue
+# vue-gsap-quiz
 
 ## Project setup
 ```

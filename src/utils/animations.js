@@ -5,10 +5,10 @@ import {
 } from 'gsap'
 
 export {
-  animateAnswerTiles,
-  answerTilesOut,
-  animateText,
-  animateOldTV,
+  scaleIn,
+  scaleOut,
+  textTyping,
+  oldTvBlinking,
   appearToLeft,
   confetti,
   dissolveText,
@@ -21,7 +21,7 @@ export {
  *
  * @param {Array} elements
  */
-const animateAnswerTiles = (elements)  => {
+const scaleIn = (elements)  => {
   const timeline = new TimelineLite()
 
   const elementsAnimation = elements.map((element) => {
@@ -52,7 +52,7 @@ const animateAnswerTiles = (elements)  => {
  *
  * @param {Array} elements
  */
-const answerTilesOut = (elements) => {
+const scaleOut = (elements) => {
   const timeline = new TimelineLite()
 
   const elementsAnimation = elements.map((element) => {
@@ -84,7 +84,7 @@ const answerTilesOut = (elements) => {
  *
  * @param {HTMLElement} element
  */
-const animateText = (element) => {
+const textTyping = (element) => {
   return new Promise(resolve => {
     const timelineMax = new TimelineMax({
       onComplete: resolve
@@ -111,7 +111,7 @@ const animateText = (element) => {
  * @param {HTMLElement} ref
  * @param {Number} delay / seconds
  */
-const animateOldTV = (ref, delay = 0) => {
+const oldTvBlinking = (ref, delay = 0) => {
   return new Promise(resolve => {
     const timeline = new TimelineLite()
 
@@ -120,8 +120,8 @@ const animateOldTV = (ref, delay = 0) => {
       .set(ref, { opacity: 1 }, '+=0.15')
       .set(ref, { opacity: 0 }, '+=0.15')
       .set(ref, { opacity: 1 }, '+=0.15')
-      .to(ref, .2, { scaleY: 0, ease: 'power4.out' })
-      .to(ref, .2, { opacity: 0 })
+      .to(ref, { scaleY: 0, ease: 'power4.out', duration: .2 })
+      .to(ref, { opacity: 0, duration: .2 })
       .add(resolve)
   })
 }
@@ -173,24 +173,27 @@ const confetti = (element, containerWidth, containerHeight) => {
     opacity: 1,
     backgroundColor: `hsl(${randomize(0, 150)}, 50%, 50%)`
   })
-  gsap.to(element, randomize(0, 5) + 4, {
+  gsap.to(element, {
     y: containerHeight,
     ease: 'Linear.easeNone',
-    repeat: -1
+    repeat: -1,
+    duration: randomize(0, 5) + 4
   })
-  gsap.to(element, randomize(0, 5) + 1, {
+  gsap.to(element, {
     x: '+=70',
     repeat: -1,
     yoyo: true,
-    ease: 'Sine.easeInOut'
+    ease: 'Sine.easeInOut',
+    duration: randomize(0, 5) + 1
   })
-  gsap.to(element, randomize(0, 5) + 1, {
+  gsap.to(element, {
     opacity: 0,
     scaleX: 0.2,
     rotation: randomize(0, 360),
     repeat: -1,
     yoyo: true,
-    ease: 'Sine.easeInOut'
+    ease: 'Sine.easeInOut',
+    duration: randomize(0, 5) + 1
   })
 }
 

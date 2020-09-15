@@ -3,39 +3,44 @@
     class="start-page space-bg"
     ref="start"
   >
-    <div class="app-card">
-      <div>
-        <h1>Intellectual Game</h1>
+    <transition
+      appear
+      name="scaling"
+    >
+      <div class="app-card">
+        <div>
+          <h1>Intellectual Game</h1>
 
-        <h3>"Get Sleep"</h3>
-      </div>
+          <h3>"Get Sleep"</h3>
+        </div>
 
-      <form
-        @submit="startGame"
-        class="start-form"
-      >
-        <input
-          v-model="playerName"
-          type="text"
-          id="name"
-          class="app-input"
-          placeholder="What is you name?"
-        />
-
-        <button
-          :disabled="this.playerName.length < 2"
-          type="submit"
-          class="app-button"
+        <form
+          @submit="startGame"
+          class="start-form"
         >
-          Start
-        </button>
-      </form>
-    </div>
+          <input
+            v-model="playerName"
+            type="text"
+            id="name"
+            class="app-input"
+            placeholder="What is you name?"
+          />
+
+          <button
+            :disabled="this.playerName.length < 2"
+            type="submit"
+            class="app-button"
+          >
+            Start
+          </button>
+        </form>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
-import { animateOldTV } from '../utils/animations'
+import { oldTvBlinking } from '../utils/animations'
 
 export default {
   name: 'Start',
@@ -57,13 +62,21 @@ export default {
   beforeRouteLeave(from, to, next) {
     const { start } = this.$refs
 
-    animateOldTV(start).then(next)
+    oldTvBlinking(start).then(next)
   }
 }
 </script>
 
 
 <style lang="scss" scoped>
+  .scaling-enter-active {
+    transition: all 1s;
+  }
+  
+  .scaling-enter {
+    transform: scale(0);
+  }
+
   .start-page {
     min-height: 100%;
     display: flex;

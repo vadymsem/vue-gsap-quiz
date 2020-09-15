@@ -62,9 +62,9 @@ import AppOverlay from '../components/AppOverlay'
 import QuestionTile from '../components/QuestionTile'
 
 import { 
-  animateText,
-  animateAnswerTiles,
-  answerTilesOut,
+  textTyping,
+  scaleIn,
+  scaleOut,
   appearToLeft,
   dissolveText,
   flicker,
@@ -118,13 +118,13 @@ export default {
   mounted() {
     const { control, question } = this.$refs
 
-      appearToLeft(control)
-        .then(() => {
-          animateText(question.$el)
-            .then(() => {
-              animateAnswerTiles(this.answerDomElements)
-            })
-        })
+    appearToLeft(control)
+      .then(() => {
+        textTyping(question.$el)
+          .then(() => {
+            scaleIn(this.answerDomElements)
+          })
+      })
   },
 
   methods: {
@@ -135,7 +135,7 @@ export default {
 
       this.playCheckedAnswerAnimation()
         .then(() => {
-          isAnswerTruthly 
+          isAnswerTruthly
             ? this.nextQuestion()
             : this.toLosePage()
         })
@@ -166,7 +166,7 @@ export default {
     playCheckedAnswerAnimation() {
       const selectedOptionRef = `answer__${this.selectedOptionIndex}`
       const rightOptionRef = `answer__${this.answer.trulyIndex}`
-      let animations = []    
+      let animations = []
 
       if (this.answer.trulyIndex === this.selectedOptionIndex) {
         // selected the right option
@@ -179,14 +179,14 @@ export default {
         ]
       }
 
-      return new Promise((resolve) => Promise.all(animations).then(resolve))
+      return Promise.all(animations)
     },
 
     playPageOutro(cb) {
       const { control, question } = this.$refs
 
       Promise.all([
-        answerTilesOut(this.answerDomElements),
+        scaleOut(this.answerDomElements),
         dissolveText(question.$el),
         hideToRight(control)
       ])

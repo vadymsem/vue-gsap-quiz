@@ -1,7 +1,7 @@
 <template>
   <div
+    class="answer"
     :class="{
-      'answer': true,
       'inactive': !isActive,
       'checked': isChecked
     }"
